@@ -1,4 +1,4 @@
-/* 
+/*
     Put your style/CSS customizations here.
     It's loaded after all the other CSS files, so any CSS rules here
     will override rules in other files.
@@ -7,6 +7,142 @@
 /* The following example turns the background to yellow if you uncomment it. */
 
 body {
-  /* background-color: #f1c40f; */
+  /*background-color: #333;*/
 }
 
+ul.ul_hr {
+        margin: 0;
+        padding: 4px;
+       }
+ul.ul_hr li {
+display: inline-block;
+margin-right: 5px;
+padding: 2px;
+background-color: white;
+color: red;
+margin: 2px;
+border-radius: 5px;
+}
+
+.chatUname{
+color: red;
+background-color: white;
+border-radius: 5px;
+padding: 0 1px;
+}
+
+.btn{
+    padding: 2%;
+}
+
+.btn-show{
+    padding: 5px !important;
+}
+
+
+.maodal-container, .maodal {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	overflow-y: auto;
+	background-color: rgba(0,0,0,0.4);
+}
+
+.maodal.maodal-show{
+	opacity: 1;
+	z-index: 100000;
+}
+
+.maodal.maodal-hide{
+	opacity: 0;
+	z-index: -1;
+}
+
+.maodal-table {
+	display: table;
+	table-layout: fixed;
+	height: 100%;
+	width: 100%;
+}
+
+.maodal-cell {
+	display: table-cell;
+	height: 100%;
+	width: 100%;
+	vertical-align: middle;
+	padding: 50px;
+}
+
+.maodal-header {
+	margin: 0;
+	padding-left: 20px;
+	padding-right: 10px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #ccc;
+}
+
+.maodal-header .close {
+	opacity: 0.5;
+	font-weight: 200;
+	font-size: 28px;
+	line-height: 0.8;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.maodal-content {
+	position: relative;
+	overflow: hidden;
+	border-radius: 4px;
+	margin-left: auto;
+	margin-right: auto;
+  background-color: #fff;
+  transform: translateY(50px);
+	max-width: 520px;
+	box-shadow: -3px 3px 5px black;
+}
+
+.maodal-body {
+	position: relative;
+	padding: 20px;
+}
+
+@media screen and (max-width: 768px) {
+	.maodal-table, .maodal-cell {
+		display: block;
+	}
+
+	.maodal-cell {
+		padding: 0;
+	}
+
+	.maodal-header {
+		text-align: center;
+	}
+
+	.maodal-content {
+		max-width: none;
+		height: 100%;
+		border-radius: 0;
+		overflow-y: auto;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.maodal-content {
+		width: 700px;
+	}
+}
+.maodal-header-progress-indicator {
+	text-align: center;
+	margin-bottom: -15px;
+	opacity: 0.5;
+}
+@media screen and (min-width: 768px) {
+	.maodal-header-progress-indicator {
+		margin-top: 10px;
+	}
+}
