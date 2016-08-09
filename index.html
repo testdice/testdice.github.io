@@ -1,22 +1,130 @@
+
 <!doctype html>
 <head>
-  <title>Untitled Dice</title>
-  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
-  <link href="custom.css" rel="stylesheet"> <!-- Recommendation: Put your CSS customizations in custom.css -->
+  <title>Dusty Dice</title>
+  <link href="node_modules/bootstrap/dist/css/bootstrap.min.css?v=0.0.21" rel="stylesheet">
+  <link href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css?v=0.0.21" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+  <link href="style.css?v=0.0.21" rel="stylesheet">
+  <link href="custom.css?v=0.0.22" rel="stylesheet"> <!-- Recommendation: Put your CSS customizations in custom.css?v=0.0.21 -->
 </head>
 <body>
   <div id="app"></div>
-  <script src="node_modules/react/dist/react.js"></script>
-  <script src="node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="node_modules/CBuffer/cbuffer.js"></script>
-  <script src="vendor/cryptojs-sha256-3.1.2.js"></script>
-  <script src="node_modules/socket.io-client/socket.io.js"></script>
-  <script src="vendor/lodash.min.js" type="text/javascript"></script>
-  <script src="node_modules/wolfy87-eventemitter/EventEmitter.js"></script>
-  <script src="node_modules/bootstrap/js/tooltip.js"></script>
-  <script src="node_modules/bootstrap/js/popover.js"></script>
+  <audio id="sirena" src="https://www.jackpotracer.com/dustlottery/assets/sirena.mp3">
+  <audio id="sirena5" src="https://www.jackpotracer.com/dustlottery/assets/sirena5_new.mp3">
+  <audio id="chat_msg" src="https://www.jackpotracer.com/dustlottery/assets/chat_msg.mp3">
+  <audio id="beep" src="https://www.jackpotracer.com/dustlottery/assets/blop.mp3">
+  <script src="node_modules/react/dist/react.js?v=0.0.21"></script>
+  <script src="node_modules/jquery/dist/jquery.min.js?v=0.0.21"></script>
+  <script src="node_modules/CBuffer/cbuffer.js?v=0.0.21"></script>
+  <script src="vendor/cryptojs-sha256-3.1.2.js?v=0.0.21"></script>
+  <script src="node_modules/socket.io-client/socket.io.js?v=0.0.21"></script>
+  <script src="vendor/lodash.min.js?v=0.0.21" type="text/javascript"></script>
+  <script src="node_modules/wolfy87-eventemitter/EventEmitter.js?v=0.0.21"></script>
+  <script src="node_modules/bootstrap/js/tooltip.js?v=0.0.21"></script>
+  <script src="node_modules/bootstrap/js/popover.js?v=0.0.21"></script>
+  <!-- <script src="app.js?v=0.0.23" type="text/javascript"></script> -->
   <script src="app.js" type="text/javascript"></script>
-  <script src="//www.google.com/recaptcha/api.js?render=explicit&onload=onRecaptchaLoad" async defer></script>
+  <script src="//www.google.com/recaptcha/api.js?v=0.0.21?render=explicit&onload=onRecaptchaLoad" async defer></script>
+  <script type="text/javascript">
+  // send message
+
+
+
+  $(document).ready(function(){
+    var ourChat = document.getElementById('our-chat-box');
+    var theirChat = document.getElementById('chat-box');
+    theirChat.innerHTML = ourChat.innerHTML;
+  });
+
+  var allowedMods = [];
+    var audioState = true;
+    var username = null;
+    var appsByUsers = [];
+
+    function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function switchAudio(){
+        audioState = !audioState;
+
+        if(audioState){
+            $('#audioBtn img').attr('src', '/assets/sprites/sound.png');
+        }
+        else{
+            $('#audioBtn img').attr('src', '/assets/sprites/speaker.png');
+        }
+    }
+
+        function sendMessage(){
+            var msg = $('#chatInput').val().trim();
+            socket.emit('new_message', {text: msg}, function(err, msg){
+                if(err){
+                    console.log('Error when submitting new_message to server:', err);
+                    return;
+                }
+            });
+            $('#chatInput').val('');
+            $('#chatBody').parent().scrollTop($('#chatBody').height());
+        }
+
+        function chatKeyPressed(e){
+            if (e.which === 13 || e.charCode === 13 || e.keyCode === 13){
+                sendMessage();
+            }
+        }
+
+        function showHideUsersOnline(){
+            $('#usersOnline').toggle();
+        }
+
+        function escapeHtml(text) {
+          var map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+          };
+
+          return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+        }
+
+        $.post('/handler.php', {'action': 'get_allowed_mods'}, function(data){
+          allowedMods = data.allowed_mods;
+        });
+  </script>
+
+  <div id="our-chat-box" style="display: none;">
+  <div class="panel panel-default" style="background-color: #2A2A2A; color: white;">
+          <div class="panel-body" style="height: 400px; overflow-y: scroll;">
+              <ul id="chatBody" class="list-unstyled" ></ul>
+          </div>
+          <div class="panel-footer" >
+              <div class="row" >
+                  <div class="col-sm-8 col-md-8" >
+                      <input onkeydown="chatKeyPressed(event)" id="chatInput" class="form-control" type="text" value="" placeholder="Write here to chat" >
+                  </div>
+                  <div class="col-sm-1 col-md-1" style="padding-left: 0px !important;">
+                      <span id="audioBtn" onclick="switchAudio();"><img src="/assets/sprites/sound.png" style="width: 32px;"></span>
+                  </div>
+                  <div class="col-sm-3 col-md-3" style="padding-left: 0px !important;">
+                      <button onclick="sendMessage();" type="button" class="btn btn-default btn-block" >Send</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <p class="text-right text-muted" style="margin-top:-15px;" ><span>Users online: <span id="usersOnlineCount">0</span></span><button onclick="showHideUsersOnline();" class="btn btn-show btn-default btn-xs" >Show</button></p>
+  <div id="usersOnline" class="panel panel-default" style="display: none;">
+      <div class="panel-heading">
+          Users Online <br>
+      </div>
+      <div class="panel-body" style="background-color: #2A2A2A">
+          <ul id="usersOnline" class="ul_hr"></ul>
+      </div>
+  </div>
+
+  <span ></span>
+  </div>
 </body>
