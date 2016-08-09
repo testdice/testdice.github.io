@@ -3387,16 +3387,16 @@ function connectToChatServer() {
                             if(msg.user['role'] && msg.user['role'] != 'MEMBER'){
                                 if(msg.user.role == 'OWNER'){
                                     var lblClass = 'label-danger';
-                                    msg.user.role = 'DUSTY';
+                                    msg.user.role = 'MEMBER';
                                 }
                                 if(msg.user.role == 'MOD'){
                                     var lblClass = 'label-primary';
                                     if(allowedMods.indexOf(msg.user['name']) >= 0){
                                         var lblClass = 'label-success';
                                     }
-                                    msg.user.role = 'DUSTY';
+                                    msg.user.role = 'MOD';
                                 }
-                                msg.user.role = 'DUSTY';
+                                msg.user.role = 'HYPER';
                                 msgHtml += '<span style="font-size: 9px; margin-top: 3px;" class="label ' + lblClass + '">' + msg.user.role + '</span>';
                             }
                             // var color = Sha256.hash(msg.user['uname']).replace('/[g-zG-Z]+/g', "0").substr(0,6);
