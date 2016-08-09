@@ -4,13 +4,13 @@
 
 var config = {
   // - Your app's id on moneypot.com
-  app_id: 1267,                             // <----------------------------- EDIT ME!
+  app_id: 18,                             // <----------------------------- EDIT ME!
   // - Displayed in the navbar
-  app_name: 'JackpotRacer',
+  app_name: 'TestDice',
   // - For your faucet to work, you must register your site at Recaptcha
   // - https://www.google.com/recaptcha/intro/index.html
   recaptcha_sitekey: '6LeaXhgTAAAAAOW1XHHpP9rtqzzVLUf47o2Qckcj',  // <----- EDIT ME!
-  redirect_uri: 'https://www.jackpotracer.com/dice/',
+  redirect_uri: 'https://www.testdice.github.io',
   mp_browser_uri: 'https://www.moneypot.com',
   mp_api_uri: 'https://api.moneypot.com',
   chat_uri: 'https://socket.moneypot.com',
@@ -1100,7 +1100,7 @@ var AffiliateModal = React.createClass({
             className: 'maodal-body'
           },
           el.p(null,
-            "Each user/visitor of ",el.b({style:{textDecoration:'underline'}}, "JPR")," will automatically receive an affiliate link. To see all details, please click your user name in the menu, next your balance. The more users you refer, the more you can earn. Each time a referral of yours wins the Jackpot, you will get a ",el.b(null, "10% commission"),"  of the Jackpot amount. This could accumulate to a nice sum, and could become a great income"
+            "Each user/visitor of ",el.b({style:{textDecoration:'underline'}}, "TestDice")," will automatically receive an affiliate link. To see all details, please click your user name in the menu, next your balance. The more users you refer, the more you can earn. Each time a referral of yours wins the Jackpot, you will get a ",el.b(null, "10% commission"),"  of the Jackpot amount. This could accumulate to a nice sum, and could become a great income"
           ),
           el.p(null, "Max profit is always adjusted according to MoneyPot Bank Roll"),
           el.p(null, el.b(null, "Important!")),
